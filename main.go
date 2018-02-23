@@ -10,13 +10,11 @@ import (
 var (
 	USERNAME      string
 	PASSWORD      string
-	TMPDIR        string = "/tmp/ssadmin-panel"
-	SSUSERSPATH   string = "/tmp/ssadmin-panel/ssusers"
-	SSTRAFFICPATH string = "/tmp/ssadmin-panel/sstraffic"
+	SSUSERSPATH   string = "ssusers"
+	SSTRAFFICPATH string = "sstraffic"
 )
 
 func update(second int) {
-	exec.Command("mkdir " + TMPDIR)
 	showCommand := "ssadmin show > " + SSUSERSPATH
 	showpwCommand := "ssadmin showpw > " + SSTRAFFICPATH
 	n := time.Duration(second)
@@ -28,12 +26,14 @@ func update(second int) {
 }
 
 func main() {
-	if len(os.Args) != 3 {
-		fmt.Println("Usage: ssadmin-panel username password")
+	if len(os.Args) != 4 {
+		fmt.Println("Usage: ssadmin-panel username password path")
 		return
 	}
 	USERNAME = os.Args[1]
 	PASSWORD = os.Args[2]
+	SSUSERSPATH = os.Args[3] + SSUSERSPATH
+	SSTRAFFICPATH = os.Args[3] + SSTRAFFICPATH
 	go update(300)
 	DefineListenAndServe()
 }
