@@ -10,6 +10,7 @@ import (
 var (
 	USERNAME      string
 	PASSWORD      string
+	TMPDIR        string = "/tmp/ssadmin-panel"
 	SSUSERSPATH   string = "/tmp/ssadmin-panel/ssusers"
 	SSTRAFFICPATH string = "/tmp/ssadmin-panel/sstraffic"
 )
@@ -18,10 +19,11 @@ func update(second int) {
 	showCommand := "ssadmin show > " + SSUSERSPATH
 	showpwCommand := "ssadmin showpw > " + SSTRAFFICPATH
 	n := time.Duration(second)
+	exec.Command("mkdir " + TMPDIR)
 	for {
-		time.Sleep(n * time.Second)
 		exec.Command(showCommand)
 		exec.Command(showpwCommand)
+		time.Sleep(n * time.Second)
 	}
 }
 
