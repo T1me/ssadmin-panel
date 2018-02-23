@@ -1,20 +1,18 @@
 package main
 
 import (
-	"io/ioutil"
 	"regexp"
 )
 
 // return []User include all user info
-func GetUsers(ssusersPath, sstrafficPath string) []User {
+func GetUsers(ssusers, sstraffic []byte) []User {
 	var multPort []string
 	var multPassword []string
 	var multLimit []string
 	var multUsed []string
 	var multRemaining []string
 	var users []User
-	// load ssusers (ssadmin showpw > ssusers)
-	ssusers, _ := ioutil.ReadFile(ssusersPath)
+	// extract from ssusers
 	re := regexp.MustCompile("(?m)^(\\d+)\\s+(.*?)\\s+")
 	multUser := re.FindAll(ssusers, -1)
 	for _, u := range multUser {
@@ -22,12 +20,11 @@ func GetUsers(ssusersPath, sstrafficPath string) []User {
 		multPort = append(multPort, re.ReplaceAllString(uString, "$1"))
 		multPassword = append(multPassword, re.ReplaceAllString(uString, "$2"))
 	}
-	// append "total" port which is not recorded in ssusers file
+	// append "total" port which is not recorded in ssusers
 	multPort = append(multPort, "total")
 	multPassword = append(multPassword, "nil")
-	// load sstraffic (ssadmin show > ssusers)
-	sstraffic, _ := ioutil.ReadFile(sstrafficPath)
-	re = regexp.MustCompile("(?m)^([^#\\s]+)\\s+\\d+\\((.*?)\\)\\s+\\d+\\((.*?)\\)\\s+\\d+\\((.*?)\\)\\s+")
+	// extract from sstraffic
+	re = regexp.MustCompile("(?m)^([^#\\s]+)\\s+\\d+\\((.*?)\\)\\s+\\d+\\((.*?)\\)\\s+\\d+\\((.*?)\\)$")
 	multTraffic := re.FindAll(sstraffic, -1)
 	for _, t := range multTraffic {
 		tString := string(t)

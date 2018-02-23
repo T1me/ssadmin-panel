@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 )
 
@@ -46,7 +45,7 @@ func panel(w http.ResponseWriter, r *http.Request) {
 	}
 	switch r.Method {
 	case "GET":
-		Users = GetUsers(SSUSERSPATH, SSTRAFFICPATH)
+		Users = GetUsers(SSUSERS, SSTRAFFIC)
 		PanelMainPage(w, Users)
 		return
 	}
@@ -78,7 +77,5 @@ func (pm *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func DefineListenAndServe() {
 	mux := &Mux{}
 	err := http.ListenAndServe(":80", mux)
-	if err != nil {
-		log.Fatal("ListenAndServer:", err)
-	}
+	ThrownErr(err)
 }

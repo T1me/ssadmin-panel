@@ -8,32 +8,35 @@ import (
 )
 
 var (
-	USERNAME      string
-	PASSWORD      string
-	SSUSERSPATH   string = "ssusers"
-	SSTRAFFICPATH string = "sstraffic"
+	USERNAME  string
+	PASSWORD  string
+	SSUSERS   []byte
+	SSTRAFFIC []byte
 )
 
+// buffer and update ssusers and sstrafic
 func update(second int) {
-	showCommand := "ssadmin show > " + SSUSERSPATH
-	showpwCommand := "ssadmin showpw > " + SSTRAFFICPATH
-	n := time.Duration(second)
+	cmd := "ssadmin"
+	showpwParam := "showpw"
+	showParam := "show"
+	s := time.Duration(second)
 	for {
-		exec.Command(showCommand)
-		exec.Command(showpwCommand)
-		time.Sleep(n * time.Second)
+		term := exec.Command(cmd, showpwParam)
+		SSUSERS, _ = term.CombinedOutput()
+		term = exec.Command(cmd, showParam)
+		SSTRAFFIC, _ = term.CombinedOutput()
+		time.Sleep(s * time.Second)
 	}
 }
 
 func main() {
-	if len(os.Args) != 4 {
-		fmt.Println("Usage: ssadmin-panel username password path")
+	defer CatchErr()
+	if len(os.Args) != 3 {
+		fmt.Println("Usage: ssadmin-panel username password")
 		return
 	}
 	USERNAME = os.Args[1]
 	PASSWORD = os.Args[2]
-	SSUSERSPATH = os.Args[3] + SSUSERSPATH
-	SSTRAFFICPATH = os.Args[3] + SSTRAFFICPATH
-	//go update(300)
+	go update(300)
 	DefineListenAndServe()
 }
