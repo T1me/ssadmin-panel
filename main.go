@@ -17,8 +17,9 @@ var (
 func update(second int) {
 	showCommand := "ssadmin show > " + SSUSERSPATH
 	showpwCommand := "ssadmin showpw > " + SSTRAFFICPATH
+	n := time.Duration(second)
 	for {
-		time.Sleep(second * time.Second)
+		time.Sleep(n * time.Second)
 		exec.Command(showCommand)
 		exec.Command(showpwCommand)
 	}
