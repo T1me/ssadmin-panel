@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"time"
@@ -14,13 +15,12 @@ var (
 )
 
 func update(second int) {
-	command := "ssadmin"
-	showParams := []string{"show", ">", SSUSERSPATH}
-	showpwParams := []string{"showpw", ">", SSTRAFFICPATH}
-	ticker := time.NewTicker(time.Second * second)
-	for _ = range ticker.C {
-		exec.Command(command, showParams)
-		exec.Command(command, showpwParams)
+	showCommand := "ssadmin show > " + SSUSERSPATH
+	showpwCommand := "ssadmin showpw > " + SSTRAFFICPATH
+	for {
+		time.Sleep(second * time.Second)
+		exec.Command(showCommand)
+		exec.Command(showpwCommand)
 	}
 }
 
