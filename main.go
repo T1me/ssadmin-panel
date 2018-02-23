@@ -34,6 +34,6 @@ func main() {
 	PASSWORD = os.Args[2]
 	SSUSERSPATH = os.Args[3] + SSUSERSPATH
 	SSTRAFFICPATH = os.Args[3] + SSTRAFFICPATH
-	go update(300)
+	//go update(300)
 	DefineListenAndServe()
 }
