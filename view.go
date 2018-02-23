@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	loginTPL, _ = template.ParseFiles("template/login.gtpl")
-	panelTPL, _ = template.ParseFiles("template/panel.gtpl")
+	loginTPL, _ = template.ParseFiles("login.gtpl")
+	panelTPL, _ = template.ParseFiles("panel.gtpl")
 	salt        = createSalt()
 )
 
