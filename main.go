@@ -16,10 +16,10 @@ var (
 )
 
 func update(second int) {
+	exec.Command("mkdir " + TMPDIR)
 	showCommand := "ssadmin show > " + SSUSERSPATH
 	showpwCommand := "ssadmin showpw > " + SSTRAFFICPATH
 	n := time.Duration(second)
-	exec.Command("mkdir " + TMPDIR)
 	for {
 		exec.Command(showCommand)
 		exec.Command(showpwCommand)
