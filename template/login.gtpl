@@ -1,48 +1,68 @@
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.3, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>Login</title>
         <style type="text/css">
             .loginBox
             {
-                width: 280px;
-                height: 100px;
-                position: fixed;
-                left: 50%;
-                top: 30%;
-                z-index: 11;
-                margin: -50px 0 0 -140px;
+                border-style: double;
+                max-width: 370px;
+                min-height: 350px;
+                margin: 130px auto 0;
                 text-align: center;
-                font-size: 0.9em;
+                overflow-x: hidden;
             }
+            @media screen and (max-width: 700px)
+            {
+                .loginBox
+                {
+                    margin: 0 auto;
+                }
+            }
+
             .prompt
             {
-                width: 280px;
-                height: 30px;
-                position: fixed;
-                left: 50%;
-                top: 20%;
-                z-index: 11;
-                margin: -50px 0 0 -140px;
+                height: 50px;
                 text-align: center;
-                font-size: 0.9em;
+                font-size: 8px;
                 color: red;
+            }
+
+            input
+            {
+                height: 40px;
+                width: 300px;
+            }
+
+            .textInput
+            {
+                padding-left: 10px;
+            }
+
+            .button
+            {
+                font-weight: bold;
             }
         </style>
     </head>
     <body ondragstart="return false;" oncontextmenu="return false;" onselectstart="return false;">
-        <div class="prompt">
-            <p>{{.}}</p>
-        </div>
         <div class="loginBox">
+            <h1>SSADMIN-PANEL</h1>
+            <div class="prompt">
+                <br />
+                <p>{{.}}</p>
+                <br />
+            </div>
             <form action="/" method="post">
                 <div>
-                    Username：<input type="text" name="username">
+                    <p><input class="textInput" type="text" name="username" placeholder="Username" autocomplete="on"></p>
                 </div>
                 <div>
-                    Password ：<input type="password" name="password">
+                    <p><input class="textInput" type="password" name="password" placeholder="Password" autocomplete="on"></p>
                 </div>
-                <p><input type="submit" value="Login"></p>
+                <div>
+                    <p><input class="button" type="submit" value="Login"></p>
+                </div>
             </form>
         </div>
         <!--
